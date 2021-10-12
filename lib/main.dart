@@ -1,3 +1,4 @@
+import 'package:chat_app/src/application.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const SizedBox(),
+      home: const Application(),
     );
   }
 }
