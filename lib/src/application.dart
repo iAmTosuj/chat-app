@@ -1,3 +1,4 @@
+import 'package:chat_app/src/chat_page/chat_page.dart';
 import 'package:flutter/material.dart';
 
 class Application extends StatelessWidget {
@@ -5,6 +6,6 @@ class Application extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return ChatPage();
   }
 }
