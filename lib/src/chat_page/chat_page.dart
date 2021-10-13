@@ -1,4 +1,5 @@
 import 'package:chat_app/bloc/chat_page_bloc.dart';
+import 'package:chat_app/src/chat_page/friend_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -20,12 +21,12 @@ class ChatPage extends StatelessWidget {
                     child: ScrollablePositionedList.builder(
                   itemCount: 30,
                   itemBuilder: (context, index) => Column(
-                    children: [
-                      SizedBox(
-                          height: 60,
-                          width: double.infinity,
-                          child: Text('Item $index')),
-                      const Divider()
+                    children: const [
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: FriendMessage(),
+                      ),
+                      Divider()
                     ],
                   ),
                   itemScrollController: bloc.itemScrollController,
@@ -42,7 +43,7 @@ class ChatPage extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {},
-                      icon: const Icon(Icons.document_scanner),
+                      icon: const Icon(Icons.file_download),
                       splashRadius: 24,
                     ),
                     Expanded(
@@ -70,8 +71,8 @@ class ChatPage extends StatelessWidget {
                       onPressed: () =>
                           context.read<ChatPageBloc>().add(ChatPageJump(20)),
                       icon: const Icon(
-                        Icons.document_scanner,
-                        color: Colors.amber,
+                        Icons.send_rounded,
+                        color: Colors.blueAccent,
                       ),
                       splashRadius: 24,
                     ),
