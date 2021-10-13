@@ -1,22 +1,37 @@
+import 'package:chat_app/bloc/chat_page_bloc.dart';
 import 'package:chat_app/src/application.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final ItemScrollController itemScrollController = ItemScrollController();
+  final ItemPositionsListener itemPositionsListener =
+      ItemPositionsListener.create();
+
+  MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (context) => ChatPageBloc(
+                itemScrollController: itemScrollController,
+                itemPositionsListener: itemPositionsListener))
+      ],
+      child: MaterialApp(
+        title: 'Awesome chat app',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const Application(),
       ),
-      home: const Application(),
     );
   }
 }
