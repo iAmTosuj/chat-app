@@ -1,15 +1,10 @@
+import 'package:chat_app/bloc/chat_page_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class ChatPage extends StatelessWidget {
-  final ItemScrollController itemScrollController = ItemScrollController();
-  final ItemPositionsListener itemPositionsListener =
-      ItemPositionsListener.create();
-
-  ChatPage({Key? key}) : super(key: key) {
-    itemPositionsListener.itemPositions.addListener(() => print(
-        itemPositionsListener.itemPositions.value.map((val) => val.index)));
-  }
+  const ChatPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,21 +12,27 @@ class ChatPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            Expanded(
-                child: ScrollablePositionedList.builder(
-              itemCount: 30,
-              itemBuilder: (context, index) => Column(
-                children: [
-                  Container(
-                      height: 60,
-                      width: double.infinity,
-                      child: Text('Item $index')),
-                  Divider()
-                ],
-              ),
-              itemScrollController: itemScrollController,
-              itemPositionsListener: itemPositionsListener,
-            )),
+            BlocBuilder<ChatPageBloc, ChatPageState>(
+              builder: (context, state) {
+                var bloc = context.read<ChatPageBloc>();
+
+                return Expanded(
+                    child: ScrollablePositionedList.builder(
+                  itemCount: 30,
+                  itemBuilder: (context, index) => Column(
+                    children: [
+                      SizedBox(
+                          height: 60,
+                          width: double.infinity,
+                          child: Text('Item $index')),
+                      const Divider()
+                    ],
+                  ),
+                  itemScrollController: bloc.itemScrollController,
+                  itemPositionsListener: bloc.itemPositionsListener,
+                ));
+              },
+            ),
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
@@ -66,9 +67,8 @@ class ChatPage extends StatelessWidget {
                       ),
                     )),
                     IconButton(
-                      onPressed: () {
-                        itemScrollController.jumpTo(index: 20);
-                      },
+                      onPressed: () =>
+                          context.read<ChatPageBloc>().add(ChatPageJump(20)),
                       icon: const Icon(
                         Icons.document_scanner,
                         color: Colors.amber,
