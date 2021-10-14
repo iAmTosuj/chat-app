@@ -8,3 +8,9 @@ class ChatPageJump extends ChatPageEvent {
 
   ChatPageJump(this.index);
 }
+
+class ChatPageSendMessage extends ChatPageEvent {
+  final String message;
+
+  ChatPageSendMessage(this.message);
+}

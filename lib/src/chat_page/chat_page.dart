@@ -53,7 +53,8 @@ class ChatPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () =>
+                          context.read<ChatPageBloc>().add(ChatPageJump(20)),
                       icon: const Icon(Icons.file_download),
                       splashRadius: 24,
                     ),
@@ -61,6 +62,8 @@ class ChatPage extends StatelessWidget {
                         child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: TextField(
+                        controller:
+                            context.read<ChatPageBloc>().textEditingController,
                         decoration: InputDecoration(
                             fillColor: const Color(0xFFF7F7F7),
                             filled: true,
@@ -79,8 +82,11 @@ class ChatPage extends StatelessWidget {
                       ),
                     )),
                     IconButton(
-                      onPressed: () =>
-                          context.read<ChatPageBloc>().add(ChatPageJump(20)),
+                      onPressed: () => context.read<ChatPageBloc>().add(
+                          ChatPageSendMessage(context
+                              .read<ChatPageBloc>()
+                              .textEditingController
+                              .text)),
                       icon: const Icon(
                         Icons.send_rounded,
                         color: Colors.blueAccent,

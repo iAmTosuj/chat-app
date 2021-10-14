@@ -26,13 +26,17 @@ class FriendMessage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Padding(
+              children: [
+                const Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text('Руководитель Сидоров Владимир Петрович'),
                 ),
-                Text(
-                    'Здравствуйте, уважаемый пациент! Я Сидоров Владимир Петрович, руководитель. Приношу извинения за проблемы, с которыми вы столкнулись в нашей клинике. Хочу исправить сложившуюся ситуацию. Прошу вас помочь разобраться, для этого расскажите мне о проблеме подробно.')
+                const Text(
+                    'Здравствуйте, уважаемый пациент! Я Сидоров Владимир Петрович, руководитель. Приношу извинения за проблемы, с которыми вы столкнулись в нашей клинике. Хочу исправить сложившуюся ситуацию. Прошу вас помочь разобраться, для этого расскажите мне о проблеме подробно.'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [Text('13:34')],
+                )
               ],
             ),
           ),

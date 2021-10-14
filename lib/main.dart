@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   final ItemScrollController itemScrollController = ItemScrollController();
   final ItemPositionsListener itemPositionsListener =
       ItemPositionsListener.create();
+  final TextEditingController textEditingController = TextEditingController();
 
   MyApp({Key? key}) : super(key: key);
 
@@ -23,7 +24,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) => ChatPageBloc(
                 itemScrollController: itemScrollController,
-                itemPositionsListener: itemPositionsListener))
+                itemPositionsListener: itemPositionsListener,
+                textEditingController: textEditingController))
       ],
       child: MaterialApp(
         title: 'Awesome chat app',
