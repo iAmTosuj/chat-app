@@ -1,5 +1,6 @@
 import 'package:chat_app/bloc/chat_page_bloc.dart';
-import 'package:chat_app/src/chat_page/friend_message.dart';
+import 'package:chat_app/resources/message_type.dart';
+import 'package:chat_app/src/chat_page/message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -10,6 +11,13 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Чатик',
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -24,7 +32,10 @@ class ChatPage extends StatelessWidget {
                     children: const [
                       Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: FriendMessage(),
+                        child: Align(
+                            child: FriendMessage(
+                          type: MessageType.your,
+                        )),
                       ),
                       Divider()
                     ],
@@ -42,7 +53,8 @@ class ChatPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () =>
+                          context.read<ChatPageBloc>().add(ChatPageJump(20)),
                       icon: const Icon(Icons.file_download),
                       splashRadius: 24,
                     ),
@@ -50,6 +62,8 @@ class ChatPage extends StatelessWidget {
                         child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: TextField(
+                        controller:
+                            context.read<ChatPageBloc>().textEditingController,
                         decoration: InputDecoration(
                             fillColor: const Color(0xFFF7F7F7),
                             filled: true,
@@ -68,8 +82,11 @@ class ChatPage extends StatelessWidget {
                       ),
                     )),
                     IconButton(
-                      onPressed: () =>
-                          context.read<ChatPageBloc>().add(ChatPageJump(20)),
+                      onPressed: () => context.read<ChatPageBloc>().add(
+                          ChatPageSendMessage(context
+                              .read<ChatPageBloc>()
+                              .textEditingController
+                              .text)),
                       icon: const Icon(
                         Icons.send_rounded,
                         color: Colors.blueAccent,
