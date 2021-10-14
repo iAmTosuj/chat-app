@@ -1,20 +1,28 @@
+import 'package:chat_app/resources/message_type.dart';
 import 'package:flutter/material.dart';
 
 class FriendMessage extends StatelessWidget {
-  const FriendMessage({Key? key}) : super(key: key);
+  final MessageType type;
+
+  const FriendMessage({Key? key, required this.type}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Image(image: AssetImage('assets/images/avatar.png')),
+        if (type == MessageType.friend)
+          const Image(image: AssetImage('assets/images/avatar.png')),
         Expanded(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
-            margin: const EdgeInsets.only(right: 34),
+            margin: type == MessageType.friend
+                ? const EdgeInsets.only(right: 34)
+                : const EdgeInsets.only(left: 34),
             decoration: BoxDecoration(
-                color: const Color(0xFFF7F7F7),
+                color: type == MessageType.friend
+                    ? const Color(0xFFF7F7F7)
+                    : const Color(0xFFE5F2F9),
                 borderRadius: BorderRadius.circular(8)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
